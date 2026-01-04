@@ -11,13 +11,13 @@
 		"prepare": "husky"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.3.10",
-		"@cloudflare/workers-types": "^4.20251228.0",
+		"@biomejs/biome": "2.3.11",
+		"@cloudflare/workers-types": "^4.20260103.0",
 		"husky": "^9.1.7",
 		"typescript": "^5.9.2",
 		"wrangler": "^4.56.0"
 	},
-	"packageManager": "pnpm@10.26.2",
+	"packageManager": "pnpm@10.27.0",
 	"lint-staged": {
 		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": ["biome format --write --no-errors-on-unmatched"],
 		"*": ["biome format --no-errors-on-unmatched --files-ignore-unknown=true"]

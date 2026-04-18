@@ -1,5 +1,4 @@
 import type { H3Event } from 'nitro/h3';
-import { createError, getRequestHeader, setResponseHeader, setResponseHeaders } from 'nitro/h3';
 import { createLogger } from 'evlog';
 import {
 	ALLOWED_FIT_MODES,

@@ -7,7 +7,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"deploy": "vite build && wrangler deploy",
+		"deploy": "vite build && wrangler deploy --config .output/server/wrangler.json",
 		"format": "biome format --write --no-errors-on-unmatched .",
 		"prepare": "husky"
 	},

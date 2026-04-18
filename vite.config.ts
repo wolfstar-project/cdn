@@ -7,6 +7,7 @@ export default defineConfig({
 			preset: 'cloudflare_module',
 			compatibilityDate: '2025-09-13',
 			serverDir: './',
+			errorHandler: './error.ts',
 		}),
 	],
 });

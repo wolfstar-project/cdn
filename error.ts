@@ -1,6 +1,6 @@
 import { defineErrorHandler } from 'nitro';
-import { logger } from '../utils/cdn';
-import type { ErrorResponse } from '../utils/types';
+import { logger } from './utils/cdn';
+import type { ErrorResponse } from './utils/types';
 
 /**
  * Global error handler for the application.

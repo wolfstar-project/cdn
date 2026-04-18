@@ -165,3 +165,8 @@ dist
 .env*
 !.env.example
 .wrangler/
+
+# Nitro / Vite output
+
+.output/
+.nitro/

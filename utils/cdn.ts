@@ -1,4 +1,6 @@
-import type { Context } from 'hono';
+import type { H3Event } from 'nitro/h3';
+import { createError, getRequestHeader, setResponseHeader, setResponseHeaders } from 'nitro/h3';
+import { createLogger } from 'evlog';
 import {
 	ALLOWED_FIT_MODES,
 	ALLOWED_FORMATS,
@@ -10,8 +12,11 @@ import {
 	MIN_IMAGE_DIMENSION,
 	MIN_QUALITY,
 } from './constants';
-import type { CfImageFit, CfImageFormat, CfImageTransformOptions, CloudflareEnv, ErrorResponse } from './types';
-import type { ContentfulStatusCode } from 'hono/utils/http-status';
+import type { CfImageFit, CfImageFormat, CfImageTransformOptions, CloudflareBindings, ErrorResponse } from './types';
+
+export const logger = createLogger({
+	name: 'wolfstar-cdn',
+});
 
 /**
  * An improved type guard to check if an object is an R2ObjectBody.
@@ -30,27 +35,32 @@ export function isR2ObjectBody(obj: unknown): obj is R2ObjectBody {
 }
 
 /**
+ * Gets the Cloudflare environment bindings from the event context.
+ */
+export function getCloudflareEnv(event: H3Event): CloudflareBindings {
+	return (event.context.cloudflare?.env ?? {}) as CloudflareBindings;
+}
+
+/**
  * Creates a standardized JSON error response.
  * @param error - A short error code (e.g., 'NOT_FOUND').
  * @param message - A descriptive error message.
  * @param status - The HTTP status code for the response.
  * @returns A Response object containing the JSON error payload.
  */
-export function createErrorResponse(
-	c: Context<CloudflareEnv>,
-	error: string,
-	message: string,
-	status: ContentfulStatusCode = 500,
-): Response {
+export function createErrorResponse(event: H3Event, error: string, message: string, status = 500): Response {
 	const errorResponse: ErrorResponse = {
 		error,
 		message,
 		timestamp: new Date().toISOString(),
 	};
 
-	return c.json(errorResponse, status, {
-		'Content-Type': 'application/json',
-		'Cache-Control': 'no-store', // Ensure error responses are not cached
+	return new Response(JSON.stringify(errorResponse), {
+		status,
+		headers: {
+			'Content-Type': 'application/json',
+			'Cache-Control': 'no-store',
+		},
 	});
 }
 
@@ -93,6 +103,7 @@ function validateImageQuality(value: number): boolean {
 
 /**
  * Parses and validates image transformation options from URL search parameters.
+ * @param pathname - The URL pathname.
  * @param searchParams - The URLSearchParams object from the request.
  * @returns A validated CfImageTransformOptions object, or null if no transformation params are present.
  */
@@ -187,7 +198,7 @@ export function parseRangeHeader(rangeHeader: string): R2Range | undefined {
  * and Cloudflare Image Transformations.
  * @param pathname - The path of the object to fetch.
  * @param cfOptions - Cloudflare Image Transformation options.
- * @param env - The Cloudflare environment bindings.
+ * @param event - The H3 event.
  * @param isHeadRequest - True if the request is a HEAD request.
  * @param rangeHeader - The value of the Range header, if present.
  * @returns A Response object containing the R2 object or its metadata.
@@ -195,19 +206,20 @@ export function parseRangeHeader(rangeHeader: string): R2Range | undefined {
 export async function fetchFromR2(
 	pathname: string,
 	cfOptions: CfImageTransformOptions | null = null,
-	c: Context<CloudflareEnv>,
+	event: H3Event,
 	isHeadRequest = false,
 	rangeHeader?: string,
 ): Promise<Response> {
 	const objectKey = normalizeObjectKey(pathname);
 	const hasTransformations = cfOptions ? Object.keys(cfOptions).length > 0 : false;
+	const env = getCloudflareEnv(event);
 
 	try {
 		// Optimization for HEAD requests: use R2's head() method to get metadata without the body.
 		if (isHeadRequest) {
-			const headObj = await c.env.wolfstar_cdn.head(objectKey);
+			const headObj = await env.wolfstar_cdn.head(objectKey);
 			if (!headObj) {
-				return createErrorResponse(c, 'NOT_FOUND', 'Object not found in R2', 404);
+				return createErrorResponse(event, 'NOT_FOUND', 'Object not found in R2', 404);
 			}
 
 			const headers = new Headers();
@@ -229,9 +241,9 @@ export async function fetchFromR2(
 		if (range) options.range = range;
 
 		// Fetch the object from R2
-		const object = await c.env.wolfstar_cdn.get(objectKey, options);
+		const object = await env.wolfstar_cdn.get(objectKey, options);
 		if (!isR2ObjectBody(object)) {
-			return createErrorResponse(c, 'INCOMPLETE_OBJECT', 'Object not correct or incomplete', 404);
+			return createErrorResponse(event, 'INCOMPLETE_OBJECT', 'Object not correct or incomplete', 404);
 		}
 
 		const headers = new Headers();
@@ -276,6 +288,7 @@ export async function fetchFromR2(
 			cfOptions !== null
 				? {
 						headers,
+						// @ts-expect-error Cloudflare-specific cf property for image transformations
 						cf: { image: cfOptions },
 					}
 				: {
@@ -283,30 +296,30 @@ export async function fetchFromR2(
 					},
 		);
 	} catch (error) {
-		console.error(`R2 error for object '${objectKey}':`, error);
-		return createErrorResponse(c, 'STORAGE_ERROR', 'Unable to retrieve file from storage', 500);
+		logger.error({ action: 'r2_fetch', objectKey, error: error instanceof Error ? error.message : String(error) });
+		return createErrorResponse(event, 'STORAGE_ERROR', 'Unable to retrieve file from storage', 500);
 	}
 }
 
 /**
  * Determines the allowed origins for CORS based on environment variables.
  * Checks if the requesting origin is in the allowed list and returns only that origin.
- * This is required because Access-Control-Allow-Origin can only contain a single origin value.
- * @param origin - The requesting origin from the Origin header.
- * @param c - The Hono context.
+ * @param requestOrigin - The requesting origin from the Origin header.
+ * @param event - The H3 event.
  * @returns The matching origin string if allowed, or null if not allowed.
  */
-export function getAllowedOrigins(origin: string, c: Context<CloudflareEnv>): string | null {
-	if (!c.env.ALLOWED_ORIGINS) {
+export function getAllowedOrigin(requestOrigin: string, event: H3Event): string | null {
+	const env = getCloudflareEnv(event);
+	if (!env.ALLOWED_ORIGINS) {
 		return null;
 	}
 
 	// Split the comma-separated string and trim whitespace
-	const allowedOrigins = c.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim());
+	const allowedOrigins = env.ALLOWED_ORIGINS.split(',').map((o) => o.trim());
 
 	// Check if the requesting origin is in the allowed list
-	if (allowedOrigins.includes(origin)) {
-		return origin;
+	if (allowedOrigins.includes(requestOrigin)) {
+		return requestOrigin;
 	}
 
 	return null;

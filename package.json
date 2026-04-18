@@ -2,11 +2,15 @@
 	"name": "worker-r2-cdn",
 	"version": "0.0.1",
 	"private": true,
+	"type": "module",
+	"engines": {
+		"node": "^20.19.0 || >=22.12.0"
+	},
 	"scripts": {
-		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"start": "wrangler dev",
-		"cf-typegen": "wrangler types",
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"deploy": "vite build && wrangler deploy --config .output/server/wrangler.json",
 		"format": "biome format --write --no-errors-on-unmatched .",
 		"prepare": "husky"
 	},
@@ -15,6 +19,7 @@
 		"@cloudflare/workers-types": "^4.20260412.1",
 		"husky": "^9.1.7",
 		"typescript": "^5.9.2",
+		"vite": "^8.0.8",
 		"wrangler": "^4.81.1"
 	},
 	"packageManager": "pnpm@10.33.0",
@@ -23,7 +28,7 @@
 		"*": ["biome format --no-errors-on-unmatched --files-ignore-unknown=true"]
 	},
 	"dependencies": {
-		"@hono-rate-limiter/cloudflare": "^0.2.2",
-		"hono": "^4.12.12"
+		"evlog": "^2.13.0",
+		"nitro": "3.0.260415-beta"
 	}
 }

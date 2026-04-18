@@ -26,6 +26,12 @@ interface ErrorResponse {
 	timestamp: string;
 }
 
-type CloudflareEnv = { Bindings: Env };
+// Cloudflare environment bindings (available via event.context.cloudflare.env)
+interface CloudflareBindings {
+	ALLOWED_ORIGINS: string;
+	R2_WORKER_URL: string;
+	wolfstar_cdn: R2Bucket;
+	RATE_LIMITER: RateLimit;
+}
 
-export type { CfImageTransformOptions, HealthResponse, ErrorResponse, CfImageFit, CfImageFormat, CloudflareEnv };
+export type { CfImageTransformOptions, HealthResponse, ErrorResponse, CfImageFit, CfImageFormat, CloudflareBindings };

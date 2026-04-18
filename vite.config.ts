@@ -6,8 +6,8 @@ export default defineConfig({
 		nitro({
 			preset: 'cloudflare_module',
 			compatibilityDate: '2025-09-13',
-			serverDir: './',
-			errorHandler: './error.ts',
+			serverDir: './server',
+			errorHandler: './server/error.ts',
 		}),
 	],
 });

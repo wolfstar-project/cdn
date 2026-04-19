@@ -11,6 +11,7 @@ A Cloudflare Worker-based CDN for image delivery and transformation. Serves imag
 - **Build:** Vite 8 + nitro/vite plugin
 - **Storage:** Cloudflare R2
 - **Rate Limiting:** Cloudflare Rate Limit binding (direct env.RATE_LIMITER.limit())
+- **Logging:** evlog (structured wide events via evlog/nitro/v3)
 - **Language:** TypeScript 5.9
 - **Package Manager:** pnpm 10.31
 - **Formatter:** Biome 2.4 (tabs, lineWidth 140, LF, single quotes, trailing commas)
@@ -42,7 +43,6 @@ server/
     03-cache.ts    -- Cache-read middleware (Cloudflare Cache API, HIT path)
   plugins/
     security-headers.ts -- Security headers (nosniff, DENY, XSS-Protection)
-    logger.ts      -- Request logger
     cache-writer.ts -- Cache-write plugin (MISS path, response hook)
   routes/
     health.get.ts  -- Health check endpoint
@@ -71,6 +71,7 @@ server/
 - Rate limiting via Cloudflare binding (20 req/60s)
 - Filesystem middleware executes in alphabetical order (01-cors, 02-rate-limiter, 03-cache)
 - Middleware short-circuits by returning a Response; continues by returning undefined
+- Structured request logging via evlog wide events (useLogger in route handlers)
 
 ## Plan Directory
 

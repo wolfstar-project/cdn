@@ -1,6 +1,14 @@
+import { useLogger } from 'evlog/nitro/v3';
 import { defineErrorHandler } from 'nitro';
 
-export default defineErrorHandler((error, _event) => {
+export default defineErrorHandler((error, event) => {
+	try {
+		const log = useLogger(event);
+		log.error(error);
+	} catch {
+		console.error('Unhandled error:', error);
+	}
+
 	const errorResponse = {
 		error: 'INTERNAL_ERROR',
 		message: 'An unexpected error occurred',
@@ -8,7 +16,7 @@ export default defineErrorHandler((error, _event) => {
 	};
 
 	return new Response(JSON.stringify(errorResponse), {
-		status: error.statusCode || 500,
+		status: error.status || 500,
 		headers: {
 			'Content-Type': 'application/json',
 			'Cache-Control': 'no-store',

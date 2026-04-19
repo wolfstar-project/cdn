@@ -200,8 +200,7 @@ export async function fetchFromR2(
 		}
 
 		return new Response(object.body, { headers });
-	} catch (error) {
-		console.error(`R2 error for object '${objectKey}':`, error);
+	} catch {
 		return createErrorResponse('STORAGE_ERROR', 'Unable to retrieve the requested resource', 500);
 	}
 }

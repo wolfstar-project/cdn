@@ -165,3 +165,9 @@ dist
 .env*
 !.env.example
 .wrangler/
+
+# Nitro / Vite build output
+.output/
+.nitro/
+
+plans/

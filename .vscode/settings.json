@@ -1,5 +1,27 @@
 {
-	"files.associations": {
-		"wrangler.json": "jsonc"
-	}
+	"prettier.enable": false,
+	"editor.formatOnSave": true,
+	"editor.formatOnSaveMode": "file",
+	"oxc.fmt.configPath": "./.oxfmtrc.json",
+	"oxc.fixKind": "safe_fix_or_suggestion",
+	"editor.defaultFormatter": "oxc.oxc-vscode",
+	"editor.gotoLocation.multipleDefinitions": "goto",
+	"editor.quickSuggestions": {
+		"strings": "on"
+	},
+	// Auto fix
+	"editor.codeActionsOnSave": {
+		"source.fixAll.oxc": "explicit"
+	},
+	"files.autoSave": "onFocusChange", // optional but recommended,
+	// GitHub Copilot Chat commit message generation instructions
+	"github.copilot.chat.commitMessageGeneration.instructions": [
+		{ "text": "Use conventional commit format: type(scope): description." },
+		{ "text": "Use imperative mood: 'Add feature' not 'Added feature'." },
+		{ "text": "Keep subject line under 50 characters." },
+		{ "text": "Use types: feat, fix, docs, style, refactor, perf, test, chore, ci." },
+		{ "text": "Include scope when relevant (e.g., api, ui, auth)." },
+		{ "text": "For additional details, use a well-structured body section." },
+		{ "text": "Use bullet points (*) for clarity." }
+	]
 }

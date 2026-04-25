@@ -1,6 +1,3 @@
 {
-	"extends": "nitro/tsconfig",
-	"compilerOptions": {
-		"types": ["./worker-configuration.d.ts"]
-	}
+	"extends": "nitro/tsconfig"
 }

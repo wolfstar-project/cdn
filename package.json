@@ -4,27 +4,28 @@
 	"private": true,
 	"scripts": {
 		"build": "nitro build",
-		"dev": "nitro dev",
-		"preview": "node .output/server/index.mjs",
 		"deploy": "nitro deploy --prebuilt",
-		"format": "biome format --write --no-errors-on-unmatched .",
-		"prepare": "husky"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.4.6",
-		"@cloudflare/workers-types": "^4.20260307.1",
-		"husky": "^9.1.7",
-		"typescript": "^5.9.2",
-		"vite": "^8.0.0",
-		"wrangler": "^4.71.0"
-	},
-	"packageManager": "pnpm@10.31.0",
-	"lint-staged": {
-		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": ["biome format --write --no-errors-on-unmatched"],
-		"*": ["biome format --no-errors-on-unmatched --files-ignore-unknown=true"]
+		"dev": "nitro dev",
+		"format": "oxfmt",
+		"prepare": "husky",
+		"preview": "node .output/server/index.mjs"
 	},
 	"dependencies": {
 		"evlog": "^2.13.0",
 		"nitro": "^3.0.260415-beta"
-	}
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.6",
+		"husky": "^9.1.7",
+		"oxfmt": "^0.46.0",
+		"typescript": "^5.9.2",
+		"vite": "^8.0.0",
+		"wrangler": "^4.71.0"
+	},
+	"lint-staged": {
+		"*": [
+			"oxfmt"
+		]
+	},
+	"packageManager": "pnpm@10.31.0"
 }

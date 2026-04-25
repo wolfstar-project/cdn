@@ -14,7 +14,7 @@ A Cloudflare Worker-based CDN for image delivery and transformation. Serves imag
 - **Logging:** evlog (structured wide events via evlog/nitro/v3)
 - **Language:** TypeScript 5.9
 - **Package Manager:** pnpm 10.31
-- **Formatter:** Biome 2.4 (tabs, lineWidth 140, LF, single quotes, trailing commas)
+- **Formatter:** Oxfmt 0.46 (tabs, lineWidth 140, LF, single quotes, trailing commas)
 - **Linter:** Biome (default rules)
 - **Test Runner:** None configured
 - **Deploy:** `vite build && wrangler deploy`
@@ -79,4 +79,4 @@ server/
 
 ## Quality Gates
 
-format: `biome format --write --no-errors-on-unmatched .` | lint: `biome check .` | typecheck: `tsc --noEmit`
+format: `oxfmt` | lint: `biome check .` | typecheck: `tsc --noEmit`

@@ -121,86 +121,82 @@ export async function fetchFromR2(
 	const objectKey = normalizeObjectKey(pathname);
 	const hasTransformations = cfOptions !== null && Object.keys(cfOptions).length > 0;
 
-	try {
-		if (isHeadRequest) {
-			const headObj = await env.wolfstar_cdn.head(objectKey);
-			if (!headObj) {
-				return createErrorResponse('NOT_FOUND', 'Object not found in R2', 404);
-			}
-
-			const headers = new Headers();
-			headObj.writeHttpMetadata(headers);
-			headers.set('etag', headObj.httpEtag);
-			headers.set('accept-ranges', 'bytes');
-			headers.set('cache-control', `public, max-age=${IMMUTABLE_CACHE_TTL}, immutable`);
-
-			return new Response(null, { headers });
-		}
-
-		if (hasTransformations) {
-			const imageUrl = `https://${env.R2_WORKER_URL}/${objectKey}`;
-			const transformedResponse = await fetch(imageUrl, {
-				cf: { image: cfOptions },
-			} as RequestInit);
-
-			if (!transformedResponse.ok) {
-				return createErrorResponse('TRANSFORM_ERROR', 'Unable to process image', transformedResponse.status);
-			}
-
-			const headers = new Headers(transformedResponse.headers);
-			headers.set('cache-control', `public, max-age=${IMMUTABLE_CACHE_TTL}, immutable`);
-
-			return new Response(transformedResponse.body, { headers });
-		}
-
-		let range: R2Range | undefined;
-		if (rangeHeader) {
-			range = parseRangeHeader(rangeHeader);
-		}
-
-		const options: R2GetOptions = {};
-		if (range) options.range = range;
-
-		const object = await env.wolfstar_cdn.get(objectKey, options);
-		if (!isR2ObjectBody(object)) {
-			return createErrorResponse('NOT_FOUND', 'The requested resource could not be found', 404);
+	if (isHeadRequest) {
+		const headObj = await env.wolfstar_cdn.head(objectKey);
+		if (!headObj) {
+			return createErrorResponse('NOT_FOUND', 'Object not found in R2', 404);
 		}
 
 		const headers = new Headers();
-		object.writeHttpMetadata(headers);
-		headers.set('etag', object.httpEtag);
+		headObj.writeHttpMetadata(headers);
+		headers.set('etag', headObj.httpEtag);
 		headers.set('accept-ranges', 'bytes');
 		headers.set('cache-control', `public, max-age=${IMMUTABLE_CACHE_TTL}, immutable`);
 
-		if (range && object.range) {
-			let start: number;
-			let end: number;
+		return new Response(null, { headers });
+	}
 
-			if ('offset' in object.range && 'length' in object.range) {
-				start = object.range.offset ?? 0;
-				const length = object.range.length ?? object.size - start;
-				end = start + length - 1;
-			} else if ('offset' in object.range) {
-				start = object.range.offset ?? 0;
-				end = object.size - 1;
-			} else if ('suffix' in object.range) {
-				start = object.size - (object.range.suffix ?? 0);
-				end = object.size - 1;
-			} else {
-				return new Response(object.body, { headers });
-			}
+	if (hasTransformations) {
+		const imageUrl = `https://${env.R2_WORKER_URL}/${objectKey}`;
+		const transformedResponse = await fetch(imageUrl, {
+			cf: { image: cfOptions },
+		} as RequestInit);
 
-			headers.set('content-range', `bytes ${start}-${end}/${object.size}`);
-
-			return new Response(object.body, {
-				status: 206,
-				statusText: 'Partial Content',
-				headers,
-			});
+		if (!transformedResponse.ok) {
+			return createErrorResponse('TRANSFORM_ERROR', 'Unable to process image', transformedResponse.status);
 		}
 
-		return new Response(object.body, { headers });
-	} catch {
-		return createErrorResponse('STORAGE_ERROR', 'Unable to retrieve the requested resource', 500);
+		const headers = new Headers(transformedResponse.headers);
+		headers.set('cache-control', `public, max-age=${IMMUTABLE_CACHE_TTL}, immutable`);
+
+		return new Response(transformedResponse.body, { headers });
 	}
+
+	let range: R2Range | undefined;
+	if (rangeHeader) {
+		range = parseRangeHeader(rangeHeader);
+	}
+
+	const options: R2GetOptions = {};
+	if (range) options.range = range;
+
+	const object = await env.wolfstar_cdn.get(objectKey, options);
+	if (!isR2ObjectBody(object)) {
+		return createErrorResponse('NOT_FOUND', 'The requested resource could not be found', 404);
+	}
+
+	const headers = new Headers();
+	object.writeHttpMetadata(headers);
+	headers.set('etag', object.httpEtag);
+	headers.set('accept-ranges', 'bytes');
+	headers.set('cache-control', `public, max-age=${IMMUTABLE_CACHE_TTL}, immutable`);
+
+	if (range && object.range) {
+		let start: number;
+		let end: number;
+
+		if ('offset' in object.range && 'length' in object.range) {
+			start = object.range.offset ?? 0;
+			const length = object.range.length ?? object.size - start;
+			end = start + length - 1;
+		} else if ('offset' in object.range) {
+			start = object.range.offset ?? 0;
+			end = object.size - 1;
+		} else if ('suffix' in object.range) {
+			start = object.size - (object.range.suffix ?? 0);
+			end = object.size - 1;
+		} else {
+			return new Response(object.body, { headers });
+		}
+
+		headers.set('content-range', `bytes ${start}-${end}/${object.size}`);
+
+		return new Response(object.body, {
+			status: 206,
+			statusText: 'Partial Content',
+			headers,
+		});
+	}
+
+	return new Response(object.body, { headers });
 }

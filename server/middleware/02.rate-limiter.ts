@@ -7,7 +7,6 @@ export default defineHandler(async (event) => {
 	const ip =
 		event.req.headers.get('cf-connecting-ip') || event.req.headers.get('x-forwarded-for') || event.req.headers.get('x-real-ip') || '';
 
-	// @ts-expect-error -- The RATE_LIMITER binding is expected to be present in the Cloudflare Workers environment, but may not be recognized by TypeScript
 	const { success } = await env.RATE_LIMITER.limit({ key: ip });
 
 	if (!success) {

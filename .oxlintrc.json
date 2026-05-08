@@ -5,5 +5,13 @@
 		"correctness": "error",
 		"suspicious": "warn"
 	},
-	"ignorePatterns": ["**/dist/**", "**/.output/**", "**/node_modules/**", "**/wrangler/**", "**/.agents/skills/**", "skills-lock.json"]
+	"ignorePatterns": [
+		"**/dist/**",
+		"**/.output/**",
+		"**/node_modules/**",
+		"**/wrangler/**",
+		"**/.agents/skills/**",
+		"skills-lock.json",
+		"worker-configuration.d.ts"
+	]
 }

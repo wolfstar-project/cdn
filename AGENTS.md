@@ -81,7 +81,7 @@ Access bindings via `event.req.runtime!.cloudflare!.env`. Always add the standar
 ```ts
 // short-circuit pattern
 export default defineHandler(async (event) => {
-	const env = event.req.runtime!.cloudflare!.env;
+	const { env } = event.req.runtime!.cloudflare!;
 	// ... logic
 	if (shouldBlock) return new Response(/* ... */);
 	return undefined; // continue chain
@@ -103,7 +103,7 @@ import { createErrorResponse } from '../utils/errors';
 export default defineHandler(async (event) => {
 	const log = useLogger(event);
 	// oxlint-disable-next-line typescript/no-non-null-assertion -- We are confident that these properties will be available in the Cloudflare Workers environment
-	const env = event.req.runtime!.cloudflare!.env;
+	const { env } = event.req.runtime!.cloudflare!;
 
 	log.set({ key: 'value' });
 

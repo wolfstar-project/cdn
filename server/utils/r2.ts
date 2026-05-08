@@ -90,7 +90,12 @@ export function parseTransformations(pathname: string, searchParams: URLSearchPa
 	return options;
 }
 
-export function parseRangeHeader(rangeHeader: string): R2Range | undefined {
+export function parseRangeHeader(rangeHeader: string):
+	| {
+			offset: number;
+			length?: number;
+	  }
+	| undefined {
 	const match = rangeHeader.match(/^bytes=(\d+)-(\d*)$/);
 	if (!match) return undefined;
 
@@ -114,7 +119,7 @@ export function parseRangeHeader(rangeHeader: string): R2Range | undefined {
 export async function fetchFromR2(
 	pathname: string,
 	cfOptions: CfImageTransformOptions | null,
-	env: Env,
+	env: Cloudflare.Env,
 	isHeadRequest: boolean,
 	rangeHeader?: string,
 ): Promise<Response> {

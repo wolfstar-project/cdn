@@ -2,7 +2,7 @@ import { defineHandler } from 'nitro';
 
 export default defineHandler(async (event) => {
 	// oxlint-disable-next-line typescript/no-non-null-assertion -- We are confident that these properties will be available in the Cloudflare Workers environment
-	const env = event.req.runtime!.cloudflare!.env;
+	const { env } = event.req.runtime!.cloudflare!;
 
 	const ip =
 		event.req.headers.get('cf-connecting-ip') || event.req.headers.get('x-forwarded-for') || event.req.headers.get('x-real-ip') || '';

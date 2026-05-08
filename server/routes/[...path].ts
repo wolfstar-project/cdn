@@ -14,7 +14,7 @@ export default defineHandler(async (event) => {
 
 	try {
 		// oxlint-disable-next-line typescript/no-non-null-assertion -- We are confident that these properties will be available in the Cloudflare Workers environment
-		const env = event.req.runtime!.cloudflare!.env;
+		const { env } = event.req.runtime!.cloudflare!;
 		const { pathname, searchParams } = new URL(event.req.url);
 		const isHeadRequest = method === 'HEAD';
 		const rangeHeader = event.req.headers.get('range') ?? undefined;

@@ -10,23 +10,23 @@ importers:
   .:
     dependencies:
       evlog:
-        specifier: ^2.14.0
+        specifier: ^2.16.0
         version: 2.16.0(nitro@3.0.260415-beta)(ofetch@2.0.0-alpha.3)(vite@8.0.11)
       nitro:
         specifier: ^3.0.260415-beta
-        version: 3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260507.0)(vite@8.0.11)
+        version: 3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260507.1)(vite@8.0.11)
     devDependencies:
       '@commitlint/cli':
-        specifier: 20.5.0
-        version: 20.5.0(@types/node@25.6.0)(conventional-commits-parser@6.4.0)(typescript@5.9.3)
+        specifier: 20.5.3
+        version: 20.5.3(@types/node@25.6.0)(conventional-commits-parser@6.4.0)(typescript@5.9.3)
       '@commitlint/config-conventional':
-        specifier: 20.5.0
-        version: 20.5.0
+        specifier: 20.5.3
+        version: 20.5.3
       husky:
         specifier: ^9.1.7
         version: 9.1.7
       jiti:
-        specifier: ^2.6.1
+        specifier: ^2.7.0
         version: 2.7.0
       nano-staged:
         specifier: ^1.0.2
@@ -41,11 +41,11 @@ importers:
         specifier: ^5.9.2
         version: 5.9.3
       vite:
-        specifier: ^8.0.10
+        specifier: ^8.0.11
         version: 8.0.11(@types/node@25.6.0)(esbuild@0.27.3)(jiti@2.7.0)
       wrangler:
-        specifier: ^4.85.0
-        version: 4.89.0
+        specifier: ^4.90.0
+        version: 4.90.0
 
 packages:
 
@@ -100,13 +100,13 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@commitlint/cli@20.5.0':
-    resolution: {integrity: sha512-yNkyN/tuKTJS3wdVfsZ2tXDM4G4Gi7z+jW54Cki8N8tZqwKBltbIvUUrSbT4hz1bhW/h0CdR+5sCSpXD+wMKaQ==}
+  '@commitlint/cli@20.5.3':
+    resolution: {integrity: sha512-OJdL0EXWD5y9LPa0nr/geOwzaS8BsdaybKkcloB0JgsguGxNv2R+hC2FTPqrAcprg35zF33KOQerY0x8W1aesA==}
     engines: {node: '>=v18'}
     hasBin: true
 
-  '@commitlint/config-conventional@20.5.0':
-    resolution: {integrity: sha512-t3Ni88rFw1XMa4nZHgOKJ8fIAT9M2j5TnKyTqJzsxea7FUetlNdYFus9dz+MhIRZmc16P0PPyEfh6X2d/qw8SA==}
+  '@commitlint/config-conventional@20.5.3':
+    resolution: {integrity: sha512-j34Qqeaa152chJgz2ysyk0BCpHenJn1lV0Rx0VXf8k3ccQcED+48EZrzMvo9jLmJUyBrrBwvu89I+2er4gW7QQ==}
     engines: {node: '>=v18'}
 
   '@commitlint/config-validator@20.5.0':
@@ -1389,8 +1389,8 @@ packages:
     resolution: {integrity: sha512-pxQJQzB6djGPXh08dacEloMFopsOqGVRKFPYvPOt9XDZ1HasbgDZA74CJGreSU4G3Ak7EFJGoiH2auq+yXISgA==}
     engines: {node: '>=18'}
 
-  miniflare@4.20260507.0:
-    resolution: {integrity: sha512-GdEI1wQZgCYot73fkMKKsdRBXcziqDzRnDvcXG5dWBW0Tu8xMN8+zIykrqE3GF0WfYjMDAIdri1ncoYu/aHhYw==}
+  miniflare@4.20260507.1:
+    resolution: {integrity: sha512-PSXBiLExTdZ4UGO/raKCHQauUpYL7F880ZRB7j0+78Rv8h7TsdN2E/iEDK9sK2Y+SPQ5wJSeAa+rDeVKoZZoEw==}
     engines: {node: '>=22.0.0'}
     hasBin: true
 
@@ -1701,8 +1701,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@4.89.0:
-    resolution: {integrity: sha512-Vm66tO2QBJoG4GdzcGDVofmI2U651w5AHgSd0bgXPqgrBqNqi1Iq3e23cXHGz8T7grLADrthkh+1J0VixzTSKw==}
+  wrangler@4.90.0:
+    resolution: {integrity: sha512-bmNIykl59TfCUn5xQgU7IWylSsPx3LQaPLMSAq2VQHt89CBrcj9qXQ0eYfjBCWA5XTBVgten391evt7xxtXwcA==}
     engines: {node: '>=22.0.0'}
     hasBin: true
     peerDependencies:
@@ -1778,7 +1778,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20260507.1':
     optional: true
 
-  '@commitlint/cli@20.5.0(@types/node@25.6.0)(conventional-commits-parser@6.4.0)(typescript@5.9.3)':
+  '@commitlint/cli@20.5.3(@types/node@25.6.0)(conventional-commits-parser@6.4.0)(typescript@5.9.3)':
     dependencies:
       '@commitlint/format': 20.5.0
       '@commitlint/lint': 20.5.3
@@ -1793,7 +1793,7 @@ snapshots:
       - conventional-commits-parser
       - typescript
 
-  '@commitlint/config-conventional@20.5.0':
+  '@commitlint/config-conventional@20.5.3':
     dependencies:
       '@commitlint/types': 20.5.0
       conventional-changelog-conventionalcommits: 9.3.1
@@ -2444,14 +2444,14 @@ snapshots:
 
   env-paths@2.2.1: {}
 
-  env-runner@0.1.7(miniflare@4.20260507.0):
+  env-runner@0.1.7(miniflare@4.20260507.1):
     dependencies:
       crossws: 0.4.5(srvx@0.11.15)
       exsolve: 1.0.8
       httpxy: 0.5.1
       srvx: 0.11.15
     optionalDependencies:
-      miniflare: 4.20260507.0
+      miniflare: 4.20260507.1
 
   error-ex@1.3.4:
     dependencies:
@@ -2494,7 +2494,7 @@ snapshots:
 
   evlog@2.16.0(nitro@3.0.260415-beta)(ofetch@2.0.0-alpha.3)(vite@8.0.11):
     optionalDependencies:
-      nitro: 3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260507.0)(vite@8.0.11)
+      nitro: 3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260507.1)(vite@8.0.11)
       ofetch: 2.0.0-alpha.3
       vite: 8.0.11(@types/node@25.6.0)(esbuild@0.27.3)(jiti@2.7.0)
 
@@ -2624,7 +2624,7 @@ snapshots:
 
   meow@13.2.0: {}
 
-  miniflare@4.20260507.0:
+  miniflare@4.20260507.1:
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       sharp: 0.34.5
@@ -2644,12 +2644,12 @@ snapshots:
 
   nf3@0.3.17: {}
 
-  nitro@3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260507.0)(vite@8.0.11):
+  nitro@3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260507.1)(vite@8.0.11):
     dependencies:
       consola: 3.4.2
       crossws: 0.4.5(srvx@0.11.15)
       db0: 0.3.4
-      env-runner: 0.1.7(miniflare@4.20260507.0)
+      env-runner: 0.1.7(miniflare@4.20260507.1)
       h3: 2.0.1-rc.22(crossws@0.4.5)
       hookable: 6.1.1
       nf3: 0.3.17
@@ -2922,13 +2922,13 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20260507.1
       '@cloudflare/workerd-windows-64': 1.20260507.1
 
-  wrangler@4.89.0:
+  wrangler@4.90.0:
     dependencies:
       '@cloudflare/kv-asset-handler': 0.5.0
       '@cloudflare/unenv-preset': 2.16.1(unenv@2.0.0-rc.24)(workerd@1.20260507.1)
       blake3-wasm: 2.1.5
       esbuild: 0.27.3
-      miniflare: 4.20260507.0
+      miniflare: 4.20260507.1
       path-to-regexp: 6.3.0
       unenv: 2.0.0-rc.24
       workerd: 1.20260507.1

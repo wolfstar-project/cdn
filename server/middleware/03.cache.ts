@@ -26,6 +26,7 @@ export default defineHandler(async (event) => {
 			return response;
 		}
 
+		// oxlint-disable-next-line no-underscore-dangle
 		event.context._cacheKey = cacheKey;
 	} catch (error) {
 		console.error('Cache middleware error:', error);

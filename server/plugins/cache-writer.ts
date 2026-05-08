@@ -1,10 +1,9 @@
-import type { H3Event } from 'nitro';
 import { definePlugin } from 'nitro';
 
 export default definePlugin((nitroApp) => {
 	nitroApp.hooks.hook('response', (res, event) => {
-		const h3Event = event as unknown as H3Event;
-		const cacheKey = h3Event.context._cacheKey as Request | undefined;
+		// oxlint-disable-next-line no-underscore-dangle
+		const cacheKey = event.req.context!._cacheKey as Request | undefined;
 		if (!cacheKey) return;
 
 		const method = event.req.method;

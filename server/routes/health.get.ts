@@ -1,5 +1,6 @@
 import { useLogger } from 'evlog/nitro/v3';
 import { defineHandler } from 'nitro';
+
 import type { HealthResponse } from '../utils/types';
 
 export default defineHandler((event) => {

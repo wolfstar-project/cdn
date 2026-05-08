@@ -1,12 +1,13 @@
 {
-	"name": "worker-r2-cdn",
+	"name": "@wolfstar-project/cdn-worker-r2",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
 		"build": "vite build",
 		"deploy": "nitro deploy --prebuilt",
 		"dev": "nitro dev",
-		"format": "oxfmt",
+		"lint:fix": "oxlint --fix && oxfmt",
+		"lint": "oxlint && oxfmt --check",
 		"prepare": "husky",
 		"preview": "node .output/server/index.mjs"
 	},
@@ -16,16 +17,22 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.13",
+		"@commitlint/cli": "20.5.0",
+		"@commitlint/config-conventional": "20.5.0",
 		"husky": "^9.1.7",
 		"jiti": "^2.6.1",
+		"nano-staged": "^1.0.2",
 		"oxfmt": "^0.46.0",
 		"typescript": "^5.9.2",
 		"vite": "^8.0.10",
 		"wrangler": "^4.85.0"
 	},
-	"lint-staged": {
-		"*": [
-			"oxfmt"
+	"nano-staged": {
+		"*.{js,ts,mjs,cjs}": [
+			"pnpm oxlint --fix"
+		],
+		"*.{js,ts,mjs,cjs,json,yml,md}": [
+			"pnpm oxfmt"
 		]
 	},
 	"packageManager": "pnpm@10.33.2"

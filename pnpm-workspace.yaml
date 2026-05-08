@@ -1,3 +1,5 @@
 onlyBuiltDependencies:
   - esbuild
   - workerd
+
+dedupePeers: true

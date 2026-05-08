@@ -1,2 +1,3 @@
 #!/bin/sh
-pnpm dlx lint-staged
+
+pnpm exec nano-staged

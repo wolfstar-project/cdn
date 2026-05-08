@@ -6,7 +6,7 @@
 
 ## Code Quality Requirements
 
-- Follow strict TypeScript conventions; never cast to `any` or use non-null assertions without a `// biome-ignore` explanation comment
+- Follow strict TypeScript conventions; never cast to `any` or use non-null assertions without a `// oxlint-disable-next-line` explanation comment
 - Ensure you write strictly type-safe code — always check array index accesses and optional chain where appropriate
 - Use `createErrorResponse` from `server/utils/errors.ts` for all error responses; never construct raw error `Response` objects inline
 - Use `UPPER_SNAKE_CASE` constants from `server/utils/constants.ts`; never hardcode magic numbers or extension strings
@@ -70,7 +70,7 @@ server/
 | `ALLOWED_ORIGINS` | env var   | Comma-separated list of allowed origins       |
 | `R2_WORKER_URL`   | env var   | Base URL used when constructing fetch targets |
 
-Access bindings via `event.req.runtime!.cloudflare!.env`. Always add the standard `// biome-ignore lint/style/noNonNullAssertion` comment above these accesses.
+Access bindings via `event.req.runtime!.cloudflare!.env`. Always add the standard `// oxlint-disable-next-line typescript/no-non-null-assertion` comment above these accesses.
 
 ## Middleware Patterns
 
@@ -102,7 +102,7 @@ import { createErrorResponse } from '../utils/errors';
 
 export default defineHandler(async (event) => {
 	const log = useLogger(event);
-	// biome-ignore lint/style/noNonNullAssertion: We are confident that these properties will be available in the Cloudflare Workers environment
+	// oxlint-disable-next-line typescript/no-non-null-assertion -- We are confident that these properties will be available in the Cloudflare Workers environment
 	const env = event.req.runtime!.cloudflare!.env;
 
 	log.set({ key: 'value' });

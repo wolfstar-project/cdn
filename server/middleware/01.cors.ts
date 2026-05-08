@@ -2,7 +2,7 @@ import { defineHandler } from 'nitro';
 import { handleCors } from 'nitro/h3';
 
 export default defineHandler((event) => {
-	// biome-ignore lint/style/noNonNullAssertion: We are confident that these properties will be available in the Cloudflare Workers environment
+	// oxlint-disable-next-line typescript/no-non-null-assertion -- We are confident that these properties will be available in the Cloudflare Workers environment
 	const env = event.req.runtime!.cloudflare!.env;
 	const allowedOrigins = env.ALLOWED_ORIGINS ? (env.ALLOWED_ORIGINS as string).split(',').map((o: string) => o.trim()) : [];
 

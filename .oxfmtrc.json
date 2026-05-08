@@ -14,5 +14,5 @@
 	"singleAttributePerLine": false,
 	"sortImports": true,
 	"sortPackageJson": true,
-	"ignorePatterns": ["**/dist/**", "**/.output/**", "**/node_modules/**", "**/wrangler/**", "**/.agents/skills/**"]
+	"ignorePatterns": ["**/dist/**", "**/.output/**", "**/node_modules/**", "**/wrangler/**", "**/.agents/skills/**", "skills-lock.json"]
 }

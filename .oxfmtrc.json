@@ -11,5 +11,8 @@
 	"arrowParens": "always",
 	"bracketSameLine": false,
 	"bracketSpacing": true,
-	"singleAttributePerLine": false
+	"singleAttributePerLine": false,
+	"sortImports": true,
+	"sortPackageJson": true,
+	"ignorePatterns": ["**/dist/**", "**/.output/**", "**/node_modules/**", "**/wrangler/**", "**/.agents/skills/**"]
 }

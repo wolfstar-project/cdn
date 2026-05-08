@@ -15,7 +15,7 @@ A Cloudflare Worker-based CDN for image delivery and transformation. Serves imag
 - **Language:** TypeScript 5.9
 - **Package Manager:** pnpm 10.31
 - **Formatter:** Oxfmt 0.46 (tabs, lineWidth 140, LF, single quotes, trailing commas)
-- **Linter:** Biome (default rules)
+- **Linter:** Oxlint (correctness + suspicious + typescript)
 - **Test Runner:** None configured
 - **Deploy:** `vite build && wrangler deploy`
 
@@ -28,7 +28,7 @@ A Cloudflare Worker-based CDN for image delivery and transformation. Serves imag
 - **Line Endings:** LF
 - **Line Width:** 140
 - **Trailing Commas:** All
-- **Imports:** Organized via Biome assist
+- **Imports:** Organized via Oxfmt (import ordering)
 
 ## File Structure
 
@@ -79,4 +79,4 @@ server/
 
 ## Quality Gates
 
-format: `oxfmt` | lint: `biome check .` | typecheck: `tsc --noEmit`
+format: `oxfmt` | lint: `oxlint` | typecheck: `tsc --noEmit`

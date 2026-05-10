@@ -10,8 +10,8 @@ importers:
   .:
     dependencies:
       evlog:
-        specifier: ^2.16.0
-        version: 2.16.0(nitro@3.0.260415-beta)(ofetch@2.0.0-alpha.3)(vite@8.0.11)
+        specifier: ^2.17.0
+        version: 2.17.0(nitro@3.0.260415-beta)(ofetch@2.0.0-alpha.3)(vite@8.0.11)
       nitro:
         specifier: ^3.0.260415-beta
         version: 3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260507.1)(vite@8.0.11)
@@ -1147,8 +1147,8 @@ packages:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
     engines: {node: '>=6'}
 
-  evlog@2.16.0:
-    resolution: {integrity: sha512-qpIt+5+5hY8hxpca4vFTxR3x5jcnEC5DQh9OffR1mZWFfX2wui7ksh9I0AUUxRNP8ttlU/QN/JPVbSj5nepJ9w==}
+  evlog@2.17.0:
+    resolution: {integrity: sha512-v6PWFV0SAEB04l70vENByG6o4r2v8KXIUNroeqYQ6uXb2xEzRRgRCxiAsAntb+Tqd4xPKenX+X67v/KyM6ar5g==}
     peerDependencies:
       '@nestjs/common': '>=11.1.19'
       '@nuxt/kit': ^4.4.2
@@ -2492,7 +2492,7 @@ snapshots:
 
   escalade@3.2.0: {}
 
-  evlog@2.16.0(nitro@3.0.260415-beta)(ofetch@2.0.0-alpha.3)(vite@8.0.11):
+  evlog@2.17.0(nitro@3.0.260415-beta)(ofetch@2.0.0-alpha.3)(vite@8.0.11):
     optionalDependencies:
       nitro: 3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260507.1)(vite@8.0.11)
       ofetch: 2.0.0-alpha.3

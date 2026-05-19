@@ -21,11 +21,11 @@
 		"husky": "^9.1.7",
 		"jiti": "^2.7.0",
 		"nano-staged": "^1.0.2",
-		"oxfmt": "^0.48.0",
-		"oxlint": "^1.63.0",
+		"oxfmt": "^0.51.0",
+		"oxlint": "^1.66.0",
 		"typescript": "^5.9.2",
-		"vite": "^8.0.11",
-		"wrangler": "^4.90.0"
+		"vite": "^8.0.13",
+		"wrangler": "^4.93.0"
 	},
 	"nano-staged": {
 		"*.{js,ts,mjs,cjs}": [

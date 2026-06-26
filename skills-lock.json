@@ -13,6 +13,11 @@
       "skillPath": "skills/conventional-commit/SKILL.md",
       "computedHash": "f29c9486cede6c7b2df0cfb0a2e4aa67446552b991bcf17d1b309e903171f03d"
     },
+    "vitehub": {
+      "source": "vitehub.dev",
+      "sourceType": "well-known",
+      "computedHash": "a29f4192793b9690d5dda9e4be82dabbaa4bf22de1f584a2d03a4278a0cccadf"
+    },
     "workers-best-practices": {
       "source": "cloudflare/skills",
       "sourceType": "github",

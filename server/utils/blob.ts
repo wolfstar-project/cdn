@@ -1,3 +1,5 @@
+import { blob } from '@vite-hub/blob';
+
 import {
 	ALLOWED_FIT_MODES,
 	ALLOWED_FORMATS,
@@ -11,17 +13,6 @@ import {
 } from './constants';
 import { createErrorResponse } from './errors';
 import type { CfImageFit, CfImageFormat, CfImageTransformOptions } from './types';
-
-export function isR2ObjectBody(obj: unknown): obj is R2ObjectBody {
-	return (
-		obj !== null &&
-		typeof obj === 'object' &&
-		'body' in obj &&
-		'size' in obj &&
-		'httpEtag' in obj &&
-		typeof (obj as Record<string, unknown>).size === 'number'
-	);
-}
 
 export function getFileExtension(pathname: string): string {
 	return pathname.split('.').pop()?.toLowerCase() ?? '';
@@ -112,14 +103,14 @@ export function parseRangeHeader(rangeHeader: string):
 }
 
 /**
- * Fetches an object from R2 with support for HEAD, Range, and Image Transformations.
+ * Fetches an object from Blob storage with support for HEAD, Range, and Image Transformations.
  *
  * Image transformations use fetch() with cf.image in RequestInit (not ResponseInit).
  */
-export async function fetchFromR2(
+export async function fetchObject(
 	pathname: string,
 	cfOptions: CfImageTransformOptions | null,
-	env: Cloudflare.Env,
+	r2WorkerUrl: string,
 	isHeadRequest: boolean,
 	rangeHeader?: string,
 ): Promise<Response> {
@@ -127,14 +118,20 @@ export async function fetchFromR2(
 	const hasTransformations = cfOptions !== null && Object.keys(cfOptions).length > 0;
 
 	if (isHeadRequest) {
-		const headObj = await env.wolfstar_cdn.head(objectKey);
-		if (!headObj) {
-			return createErrorResponse('NOT_FOUND', 'Object not found in R2', 404);
+		let meta;
+		try {
+			meta = await blob.head(objectKey);
+		} catch (err) {
+			if ((err as { statusCode?: number }).statusCode === 404) {
+				return createErrorResponse('NOT_FOUND', 'Object not found', 404);
+			}
+			throw err;
 		}
 
 		const headers = new Headers();
-		headObj.writeHttpMetadata(headers);
-		headers.set('etag', headObj.httpEtag);
+		if (meta.contentType) headers.set('content-type', meta.contentType);
+		if (meta.size != null) headers.set('content-length', String(meta.size));
+		if (meta.httpEtag) headers.set('etag', meta.httpEtag);
 		headers.set('accept-ranges', 'bytes');
 		headers.set('cache-control', `public, max-age=${IMMUTABLE_CACHE_TTL}, immutable`);
 
@@ -142,7 +139,7 @@ export async function fetchFromR2(
 	}
 
 	if (hasTransformations) {
-		const imageUrl = `https://${env.R2_WORKER_URL}/${objectKey}`;
+		const imageUrl = `https://${r2WorkerUrl}/${objectKey}`;
 		const transformedResponse = await fetch(imageUrl, {
 			cf: { image: cfOptions },
 		} as RequestInit);
@@ -157,51 +154,34 @@ export async function fetchFromR2(
 		return new Response(transformedResponse.body, { headers });
 	}
 
-	let range: R2Range | undefined;
-	if (rangeHeader) {
-		range = parseRangeHeader(rangeHeader);
-	}
-
-	const options: R2GetOptions = {};
-	if (range) options.range = range;
-
-	const object = await env.wolfstar_cdn.get(objectKey, options);
-	if (!isR2ObjectBody(object)) {
+	const object = await blob.get(objectKey);
+	if (!object) {
 		return createErrorResponse('NOT_FOUND', 'The requested resource could not be found', 404);
 	}
 
 	const headers = new Headers();
-	object.writeHttpMetadata(headers);
-	headers.set('etag', object.httpEtag);
+	if (object.type) headers.set('content-type', object.type);
 	headers.set('accept-ranges', 'bytes');
 	headers.set('cache-control', `public, max-age=${IMMUTABLE_CACHE_TTL}, immutable`);
 
-	if (range && object.range) {
-		let start: number;
-		let end: number;
+	if (rangeHeader) {
+		const range = parseRangeHeader(rangeHeader);
+		if (range) {
+			const start = range.offset;
+			const end = range.length !== undefined ? start + range.length - 1 : object.size - 1;
+			const sliced = object.slice(start, end + 1);
 
-		if ('offset' in object.range && 'length' in object.range) {
-			start = object.range.offset ?? 0;
-			const length = object.range.length ?? object.size - start;
-			end = start + length - 1;
-		} else if ('offset' in object.range) {
-			start = object.range.offset ?? 0;
-			end = object.size - 1;
-		} else if ('suffix' in object.range) {
-			start = object.size - (object.range.suffix ?? 0);
-			end = object.size - 1;
-		} else {
-			return new Response(object.body, { headers });
+			headers.set('content-range', `bytes ${start}-${end}/${object.size}`);
+			headers.set('content-length', String(end - start + 1));
+
+			return new Response(sliced.stream(), {
+				status: 206,
+				statusText: 'Partial Content',
+				headers,
+			});
 		}
-
-		headers.set('content-range', `bytes ${start}-${end}/${object.size}`);
-
-		return new Response(object.body, {
-			status: 206,
-			statusText: 'Partial Content',
-			headers,
-		});
 	}
 
-	return new Response(object.body, { headers });
+	headers.set('content-length', String(object.size));
+	return new Response(object.stream(), { headers });
 }

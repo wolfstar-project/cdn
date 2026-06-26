@@ -1,8 +1,8 @@
 import { useLogger } from 'evlog/nitro/v3';
 import { defineHandler } from 'nitro';
 
+import { fetchObject, parseTransformations } from '../utils/blob';
 import { createErrorResponse } from '../utils/errors';
-import { fetchFromR2, parseTransformations } from '../utils/r2';
 
 export default defineHandler(async (event) => {
 	const log = useLogger(event);
@@ -23,22 +23,22 @@ export default defineHandler(async (event) => {
 		const objectKey = pathname.startsWith('/') ? pathname.slice(1) : pathname;
 
 		log.set({
-			r2: { key: objectKey, transform: transformOptions !== null, range: !!rangeHeader },
+			blob: { key: objectKey, transform: transformOptions !== null, range: !!rangeHeader },
 		});
 
 		if (transformOptions && rangeHeader) {
 			return createErrorResponse('RANGE_NOT_SUPPORTED', 'Range requests are not supported for image transformations', 400);
 		}
 
-		const response = await fetchFromR2(pathname, transformOptions, env, isHeadRequest, rangeHeader);
+		const response = await fetchObject(pathname, transformOptions, env.R2_WORKER_URL, isHeadRequest, rangeHeader);
 
 		if (!response.ok) {
-			log.set({ r2: { error: true, status: response.status } });
+			log.set({ blob: { error: true, status: response.status } });
 		}
 
 		return response;
 	} catch (error) {
-		log.error(error as Error, { step: 'fetchFromR2' });
+		log.error(error as Error, { step: 'fetchObject' });
 		return createErrorResponse('REQUEST_ERROR', 'An unexpected error occurred', 500);
 	}
 });

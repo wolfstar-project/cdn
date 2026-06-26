@@ -1,4 +1,8 @@
-import { blob } from '@vite-hub/blob';
+import type { BlobStorage } from '@vite-hub/blob';
+import { createDriver } from '@vite-hub/blob/drivers/cloudflare';
+import { getNamedBlobRuntimeStorage, setNamedBlobRuntimeStorage } from '@vite-hub/blob/runtime/state';
+import { createBlobStorage } from '@vite-hub/blob/storage';
+import { useRuntimeConfig } from 'nitro/runtime-config';
 
 import {
 	ALLOWED_FIT_MODES,
@@ -81,6 +85,24 @@ export function parseTransformations(pathname: string, searchParams: URLSearchPa
 	return options;
 }
 
+function resolveBlobStorage(): BlobStorage {
+	const existing = getNamedBlobRuntimeStorage('default');
+	if (existing) return existing;
+
+	const { blob } = useRuntimeConfig();
+	if (!blob) {
+		throw new Error('Blob runtime is disabled.');
+	}
+
+	if (blob.store.driver !== 'cloudflare-r2') {
+		throw new Error(`Unsupported blob driver: ${blob.store.driver}`);
+	}
+
+	const storage = createBlobStorage(createDriver(blob.store));
+	setNamedBlobRuntimeStorage('default', storage);
+	return storage;
+}
+
 export function parseRangeHeader(rangeHeader: string):
 	| {
 			offset: number;
@@ -116,11 +138,12 @@ export async function fetchObject(
 ): Promise<Response> {
 	const objectKey = normalizeObjectKey(pathname);
 	const hasTransformations = cfOptions !== null && Object.keys(cfOptions).length > 0;
+	const storage = resolveBlobStorage();
 
 	if (isHeadRequest) {
 		let meta;
 		try {
-			meta = await blob.head(objectKey);
+			meta = await storage.head(objectKey);
 		} catch (err) {
 			if ((err as { statusCode?: number }).statusCode === 404) {
 				return createErrorResponse('NOT_FOUND', 'Object not found', 404);
@@ -154,7 +177,7 @@ export async function fetchObject(
 		return new Response(transformedResponse.body, { headers });
 	}
 
-	const object = await blob.get(objectKey);
+	const object = await storage.get(objectKey);
 	if (!object) {
 		return createErrorResponse('NOT_FOUND', 'The requested resource could not be found', 404);
 	}
@@ -174,7 +197,7 @@ export async function fetchObject(
 			headers.set('content-range', `bytes ${start}-${end}/${object.size}`);
 			headers.set('content-length', String(end - start + 1));
 
-			return new Response(sliced.stream(), {
+			return new Response(sliced, {
 				status: 206,
 				statusText: 'Partial Content',
 				headers,
@@ -183,5 +206,5 @@ export async function fetchObject(
 	}
 
 	headers.set('content-length', String(object.size));
-	return new Response(object.stream(), { headers });
+	return new Response(object, { headers });
 }

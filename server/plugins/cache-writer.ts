@@ -16,10 +16,8 @@ export default definePlugin((nitroApp) => {
 		try {
 			// @ts-expect-error: caches.default is a Cloudflare Workers global
 			const cache: Cache = caches.default;
-			const responseToCache = new Response(res.body, {
-				status: res.status,
-				headers: res.headers,
-			});
+			// clone() tees the body stream so the original response is still readable by the client
+			const responseToCache = res.clone();
 
 			event.req.waitUntil?.(
 				cache.put(cacheKey, responseToCache).catch((cacheError: unknown) => {

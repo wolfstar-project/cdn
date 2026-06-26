@@ -40,6 +40,21 @@
 	// "assets": { "directory": "./public/", "binding": "ASSETS" }
 
 	/**
+	 * Environments
+	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environments
+	 */
+	"env": {
+		"staging": {
+			"r2_buckets": [
+				{
+					"bucket_name": "wolfstar-cdn",
+					"binding": "wolfstar_cdn",
+					"remote": true,
+				},
+			],
+		},
+	},
+	/**
 	 * Rate Limiting
 	 * https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/
 	 */

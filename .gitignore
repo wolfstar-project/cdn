@@ -150,6 +150,13 @@ dist
 
 .vscode-test
 
+# Vite Hub Blob
+.vitehub/blob
+
+# Vercel
+
+.vercel
+
 # yarn v2
 
 .yarn/cache

@@ -9,7 +9,7 @@ export default defineNitroConfig({
 	modules: [evlog({ env: { service: 'wolfstar-cdn' } }), blobNitroModule],
 	blob: {
 		driver: 'cloudflare-r2',
-		binding: 'wolfstar_cdn',
+		binding: 'wolfstar-cdn',
 	},
 	imports: {},
 	errorHandler: './server/error',

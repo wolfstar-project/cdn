@@ -2,13 +2,14 @@
 	"name": "@wolfstar-project/cdn-worker-r2",
 	"version": "0.0.1",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"build": "vite build",
 		"deploy": "nitro deploy --prebuilt",
-		"dev": "nitro dev",
+		"dev": "vite dev",
 		"lint:fix": "oxlint --fix && oxfmt",
 		"lint": "oxlint && oxfmt --check",
-		"prepare": "husky",
+		"prepare": "node .husky/install.mjs",
 		"preview": "node .output/server/index.mjs"
 	},
 	"dependencies": {

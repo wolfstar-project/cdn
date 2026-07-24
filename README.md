@@ -148,6 +148,7 @@ prioritizes **stability**, **speed**, and **security**.
 - `pnpm preview` — Preview the production build locally
 - `pnpm lint` — Run Oxlint + Oxfmt check (no auto-fix)
 - `pnpm lint:fix` — Run Oxlint & Oxfmt and fix issues
+- `pnpm typecheck` — Type-check with `tsc --noEmit` (must pass with zero errors)
 
 ### Project Structure
 
@@ -239,7 +240,8 @@ Before committing:
 
 1. `pnpm build` — must build successfully
 2. `pnpm lint:fix` — fix lint and format issues
-3. Commit messages must follow
+3. `pnpm typecheck` — must pass with zero type errors
+4. Commit messages must follow
    [Conventional Commits](https://www.conventionalcommits.org/)
 
 </div>
@@ -366,7 +368,8 @@ Copyright © 2024 [WolfStar][profile-link]. This project is
 [profile-link]: https://github.com/wolfstar-project
 [share-linkedin-shield]:
   https://img.shields.io/badge/-share%20on%20linkedin-black?labelColor=black&logo=linkedin&logoColor=white&style=flat-square
-[share-linkedin-link]: https://linkedin.com/feed
+[share-linkedin-link]:
+  https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fgithub.com%2Fwolfstar-project%2Fcdn
 [share-reddit-shield]:
   https://img.shields.io/badge/-share%20on%20reddit-black?labelColor=black&logo=reddit&logoColor=white&style=flat-square
 [share-reddit-link]:

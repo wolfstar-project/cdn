@@ -10,7 +10,8 @@
 		"lint:fix": "oxlint --fix && oxfmt",
 		"lint": "oxlint && oxfmt --check",
 		"prepare": "node .husky/install.mjs",
-		"preview": "node .output/server/index.mjs"
+		"preview": "node .output/server/index.mjs",
+		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@vite-hub/blob": "^0.0.1",

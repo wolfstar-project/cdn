@@ -204,13 +204,13 @@ Transformations apply when the file extension is an image
 (`jpg`, `jpeg`, `png`, `gif`, `webp`, `svg`, `tiff`, `avif`) **and** at least one
 transform parameter is present.
 
-| Param | Description                         | Valid values                                      |
-| ----- | ----------------------------------- | ------------------------------------------------- |
-| `w`   | Width                               | `1`–`4096`                                        |
-| `h`   | Height                              | `1`–`4096`                                        |
-| `q`   | Quality (default `85`)              | `1`–`100`                                         |
-| `fit` | Resize fit mode                     | `scale-down`, `contain`, `cover`, `crop`, `pad`   |
-| `f`   | Output format                       | `webp`, `avif`, `jpeg`, `png`                     |
+| Param | Description            | Valid values                                    |
+| ----- | ---------------------- | ----------------------------------------------- |
+| `w`   | Width                  | `1`–`4096`                                      |
+| `h`   | Height                 | `1`–`4096`                                      |
+| `q`   | Quality (default `85`) | `1`–`100`                                       |
+| `fit` | Resize fit mode        | `scale-down`, `contain`, `cover`, `crop`, `pad` |
+| `f`   | Output format          | `webp`, `avif`, `jpeg`, `png`                   |
 
 ```http
 GET /avatars/user.png?w=256&h=256&fit=cover&f=webp&q=80
@@ -326,64 +326,37 @@ Copyright © 2024 [WolfStar][profile-link]. This project is
 [ko-fi-link]: https://ko-fi.com/redstar071
 [patreon-link]: https://www.patreon.com/RedStar071
 [github-sponsor-link]: https://github.com/sponsors/wolfstar-project
-[back-to-top]:
-  https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
+[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
 [blog]: https://blog.wolfstar.rocks
-[contributing-link]:
-  https://github.com/wolfstar-project/cdn/blob/main/.github/CONTRIBUTING.md
+[contributing-link]: https://github.com/wolfstar-project/cdn/blob/main/.github/CONTRIBUTING.md
 [discord-link]: https://join.wolfstar.rocks
-[discord-shield]:
-  https://shieldcn.dev/discord/830481105261821952?variant=branded
-[github-contributors-link]:
-  https://github.com/wolfstar-project/cdn/graphs/contributors
-[github-contributors-shield]:
-  https://shieldcn.dev/github/contributors/wolfstar-project/cdn?variant=branded
-[github-forks-link]:
-  https://github.com/wolfstar-project/cdn/network/members
-[github-forks-shield]:
-  https://shieldcn.dev/github/forks/wolfstar-project/cdn?variant=branded
+[discord-shield]: https://shieldcn.dev/discord/830481105261821952?variant=branded
+[github-contributors-link]: https://github.com/wolfstar-project/cdn/graphs/contributors
+[github-contributors-shield]: https://shieldcn.dev/github/contributors/wolfstar-project/cdn?variant=branded
+[github-forks-link]: https://github.com/wolfstar-project/cdn/network/members
+[github-forks-shield]: https://shieldcn.dev/github/forks/wolfstar-project/cdn?variant=branded
 [github-issues-link]: https://github.com/wolfstar-project/cdn/issues
-[github-issues-shield]:
-  https://shieldcn.dev/github/issues/wolfstar-project/cdn?variant=branded
-[github-license-link]:
-  https://github.com/wolfstar-project/cdn/blob/main/LICENSE
-[github-license-shield]:
-  https://shieldcn.dev/github/license/wolfstar-project/cdn?variant=branded
-[github-release-link]:
-  https://github.com/wolfstar-project/cdn/releases
-[github-release-shield]:
-  https://shieldcn.dev/github/release/wolfstar-project/cdn?variant=branded
-[github-last-commit-link]:
-  https://github.com/wolfstar-project/cdn/commits
-[github-last-commit-shield]:
-  https://shieldcn.dev/github/last-commit/wolfstar-project/cdn?variant=branded
-[github-stars-link]:
-  https://github.com/wolfstar-project/cdn/network/stargazers
-[github-stars-shield]:
-  https://shieldcn.dev/github/stars/wolfstar-project/cdn?variant=branded
+[github-issues-shield]: https://shieldcn.dev/github/issues/wolfstar-project/cdn?variant=branded
+[github-license-link]: https://github.com/wolfstar-project/cdn/blob/main/LICENSE
+[github-license-shield]: https://shieldcn.dev/github/license/wolfstar-project/cdn?variant=branded
+[github-release-link]: https://github.com/wolfstar-project/cdn/releases
+[github-release-shield]: https://shieldcn.dev/github/release/wolfstar-project/cdn?variant=branded
+[github-last-commit-link]: https://github.com/wolfstar-project/cdn/commits
+[github-last-commit-shield]: https://shieldcn.dev/github/last-commit/wolfstar-project/cdn?variant=branded
+[github-stars-link]: https://github.com/wolfstar-project/cdn/network/stargazers
+[github-stars-shield]: https://shieldcn.dev/github/stars/wolfstar-project/cdn?variant=branded
 [official-site]: https://wolfstar.rocks
 [pr-welcome-link]: https://github.com/wolfstar-project/cdn/pulls
-[pr-welcome-shield]:
-  https://shieldcn.dev/badge/PRs-welcome-ffcb47?variant=branded
+[pr-welcome-shield]: https://shieldcn.dev/badge/PRs-welcome-ffcb47?variant=branded
 [profile-link]: https://github.com/wolfstar-project
-[share-linkedin-shield]:
-  https://img.shields.io/badge/-share%20on%20linkedin-black?labelColor=black&logo=linkedin&logoColor=white&style=flat-square
-[share-linkedin-link]:
-  https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fgithub.com%2Fwolfstar-project%2Fcdn
-[share-reddit-shield]:
-  https://img.shields.io/badge/-share%20on%20reddit-black?labelColor=black&logo=reddit&logoColor=white&style=flat-square
-[share-reddit-link]:
-  https://www.reddit.com/submit?title=Check%20this%20GitHub%20repository%20out%20%F0%9F%A4%AF%20WolfStar%20CDN%20-%20Fast%20secure%20asset%20delivery%20for%20the%20WolfStar%20Network.&url=https%3A%2F%2Fgithub.com%2Fwolfstar-project%2Fcdn
-[share-telegram-shield]:
-  https://img.shields.io/badge/-share%20on%20telegram-black?labelColor=black&logo=telegram&logoColor=white&style=flat-square
-[share-telegram-link]:
-  https://t.me/share/url?text=Check%20this%20GitHub%20repository%20out%20%F0%9F%A4%AF%20WolfStar%20CDN%20-%20Fast%20secure%20asset%20delivery%20for%20the%20WolfStar%20Network.&url=https%3A%2F%2Fgithub.com%2Fwolfstar-project%2Fcdn
-[share-whatsapp-shield]:
-  https://img.shields.io/badge/-share%20on%20whatsapp-black?labelColor=black&logo=whatsapp&logoColor=white&style=flat-square
-[share-whatsapp-link]:
-  https://api.whatsapp.com/send?text=Check%20this%20GitHub%20repository%20out%20%F0%9F%A4%AF%20WolfStar%20CDN%20-%20Fast%20secure%20asset%20delivery%20for%20the%20WolfStar%20Network.%20https%3A%2F%2Fgithub.com%2Fwolfstar-project%2Fcdn
-[share-x-shield]:
-  https://img.shields.io/badge/-share%20on%20x-black?labelColor=black&logo=x&logoColor=white&style=flat-square
-[share-x-link]:
-  https://x.com/intent/tweet?hashtags=cloudflare%2Cworkers%2Ccdn&text=Check%20this%20GitHub%20repository%20out%20%F0%9F%A4%AF%20WolfStar%20CDN%20-%20Fast%20secure%20asset%20delivery%20for%20the%20WolfStar%20Network.&url=https%3A%2F%2Fgithub.com%2Fwolfstar-project%2Fcdn
+[share-linkedin-shield]: https://img.shields.io/badge/-share%20on%20linkedin-black?labelColor=black&logo=linkedin&logoColor=white&style=flat-square
+[share-linkedin-link]: https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fgithub.com%2Fwolfstar-project%2Fcdn
+[share-reddit-shield]: https://img.shields.io/badge/-share%20on%20reddit-black?labelColor=black&logo=reddit&logoColor=white&style=flat-square
+[share-reddit-link]: https://www.reddit.com/submit?title=Check%20this%20GitHub%20repository%20out%20%F0%9F%A4%AF%20WolfStar%20CDN%20-%20Fast%20secure%20asset%20delivery%20for%20the%20WolfStar%20Network.&url=https%3A%2F%2Fgithub.com%2Fwolfstar-project%2Fcdn
+[share-telegram-shield]: https://img.shields.io/badge/-share%20on%20telegram-black?labelColor=black&logo=telegram&logoColor=white&style=flat-square
+[share-telegram-link]: https://t.me/share/url?text=Check%20this%20GitHub%20repository%20out%20%F0%9F%A4%AF%20WolfStar%20CDN%20-%20Fast%20secure%20asset%20delivery%20for%20the%20WolfStar%20Network.&url=https%3A%2F%2Fgithub.com%2Fwolfstar-project%2Fcdn
+[share-whatsapp-shield]: https://img.shields.io/badge/-share%20on%20whatsapp-black?labelColor=black&logo=whatsapp&logoColor=white&style=flat-square
+[share-whatsapp-link]: https://api.whatsapp.com/send?text=Check%20this%20GitHub%20repository%20out%20%F0%9F%A4%AF%20WolfStar%20CDN%20-%20Fast%20secure%20asset%20delivery%20for%20the%20WolfStar%20Network.%20https%3A%2F%2Fgithub.com%2Fwolfstar-project%2Fcdn
+[share-x-shield]: https://img.shields.io/badge/-share%20on%20x-black?labelColor=black&logo=x&logoColor=white&style=flat-square
+[share-x-link]: https://x.com/intent/tweet?hashtags=cloudflare%2Cworkers%2Ccdn&text=Check%20this%20GitHub%20repository%20out%20%F0%9F%A4%AF%20WolfStar%20CDN%20-%20Fast%20secure%20asset%20delivery%20for%20the%20WolfStar%20Network.&url=https%3A%2F%2Fgithub.com%2Fwolfstar-project%2Fcdn
 [invite-link]: https://invite.wolfstar.rocks

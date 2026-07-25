@@ -134,7 +134,7 @@ server/
     types.ts             -- Type definitions (CfImageTransformOptions, etc.)
     constants.ts         -- Constants (image extensions, dimension limits, cache TTL)
     errors.ts            -- Error response factory
-    r2.ts                -- R2 utilities (fetch, transform, range, parse)
+    blob.ts              -- Blob/R2 utilities (fetch, transform, range, parse)
 ```
 
 ## Code style
@@ -207,7 +207,7 @@ export default defineHandler(async (event) => {
 
 ### Image transformation patterns
 
-- Call `parseTransformations(pathname, searchParams)` from `server/utils/r2.ts`
+- Call `parseTransformations(pathname, searchParams)` from `server/utils/blob.ts`
 - Transformation is triggered only when the file extension is in
   `IMAGE_EXTENSIONS` **and** at least one transform param (`w`, `h`, `q`,
   `fit`, `f`) is present

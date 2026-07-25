@@ -114,7 +114,7 @@ Rules:
 
 ## Image Transformation Patterns
 
-- Call `parseTransformations(pathname, searchParams)` from `server/utils/r2.ts`;
+- Call `parseTransformations(pathname, searchParams)` from `server/utils/blob.ts`;
   it returns `CfImageTransformOptions | null`
 - Transformation is triggered only when the file extension is in
   `IMAGE_EXTENSIONS` **and** at least one transform param (`w`, `h`, `q`, `fit`,

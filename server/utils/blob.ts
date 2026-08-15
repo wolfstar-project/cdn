@@ -22,6 +22,25 @@ export function getFileExtension(pathname: string): string {
 	return pathname.split('.').pop()?.toLowerCase() ?? '';
 }
 
+const EXTENSION_CONTENT_TYPES: Record<string, string> = {
+	avif: 'image/avif',
+	gif: 'image/gif',
+	jpeg: 'image/jpeg',
+	jpg: 'image/jpeg',
+	png: 'image/png',
+	svg: 'image/svg+xml',
+	tiff: 'image/tiff',
+	webp: 'image/webp',
+};
+
+/**
+ * R2 objects uploaded without httpMetadata.contentType would otherwise be served with no
+ * Content-Type, which browsers refuse to render as images due to X-Content-Type-Options: nosniff.
+ */
+function guessContentType(pathname: string): string | undefined {
+	return EXTENSION_CONTENT_TYPES[getFileExtension(pathname)];
+}
+
 function normalizeObjectKey(pathname: string): string {
 	return pathname.startsWith('/') ? pathname.slice(1) : pathname;
 }
@@ -152,7 +171,8 @@ export async function fetchObject(
 		}
 
 		const headers = new Headers();
-		if (meta.contentType) headers.set('content-type', meta.contentType);
+		const headContentType = meta.contentType || guessContentType(objectKey);
+		if (headContentType) headers.set('content-type', headContentType);
 		if (meta.size != null) headers.set('content-length', String(meta.size));
 		if (meta.httpEtag) headers.set('etag', meta.httpEtag);
 		headers.set('accept-ranges', 'bytes');
@@ -183,7 +203,8 @@ export async function fetchObject(
 	}
 
 	const headers = new Headers();
-	if (object.type) headers.set('content-type', object.type);
+	const contentType = object.type || guessContentType(objectKey);
+	if (contentType) headers.set('content-type', contentType);
 	headers.set('accept-ranges', 'bytes');
 	headers.set('cache-control', `public, max-age=${IMMUTABLE_CACHE_TTL}, immutable`);
 

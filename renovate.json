@@ -1,4 +1,11 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["github>wolfstar-project/.github:wolfstar-renovate"]
+	"extends": ["github>wolfstar-project/.github:wolfstar-renovate"],
+	"packageRules": [
+		{
+			"description": "0.0.4 changes the storage API (BlobResult tuples) and needs a code migration",
+			"matchPackageNames": ["@vite-hub/blob"],
+			"allowedVersions": "<0.0.4"
+		}
+	]
 }

@@ -151,7 +151,7 @@ dist
 .vscode-test
 
 # Vite Hub Blob
-.vitehub/blob
+.vitehub
 
 # Vercel
 

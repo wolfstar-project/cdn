@@ -1,5 +1,6 @@
-onlyBuiltDependencies:
-  - esbuild
-  - workerd
+allowBuilds:
+  esbuild: true
+  sharp: false
+  workerd: true
 
 dedupePeers: true

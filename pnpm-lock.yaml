@@ -10,14 +10,14 @@ importers:
   .:
     dependencies:
       '@vite-hub/blob':
-        specifier: ^0.0.1
-        version: 0.0.1(crossws@0.4.5)(nitro@3.0.260415-beta)(vite@8.0.14)
+        specifier: ^0.0.4
+        version: 0.0.4(crossws@0.4.5)(vite@8.0.14)
       evlog:
         specifier: ^2.17.0
         version: 2.17.0(nitro@3.0.260415-beta)(ofetch@2.0.0-alpha.3)(vite@8.0.14)
       nitro:
         specifier: ^3.0.260415-beta
-        version: 3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260521.0)(vite@8.0.14)
+        version: 3.0.260415-beta(aws4fetch@1.0.20)(jiti@2.7.0)(miniflare@4.20260521.0)(vite@8.0.14)
     devDependencies:
       '@commitlint/cli':
         specifier: 21.2.1
@@ -1057,19 +1057,61 @@ packages:
   '@types/node@25.6.0':
     resolution: {integrity: sha512-+qIYRKdNYJwY3vRCZMdJbPLJAtGjQBudzZzdzwQYkEPQd+PJGixUL5QfvCLDaULoLv+RhT3LDkwEfKaAkgSmNQ==}
 
-  '@vite-hub/blob@0.0.1':
-    resolution: {integrity: sha512-xyeHLF/1RNqHxyDoZ+iWxbewukyDrCo8vrB0NFktRbDOzgy4o/f71Z9Oi/YH9fpI2DSUotuCp6lYXgRjsQe/vA==}
+  '@vite-hub/blob@0.0.4':
+    resolution: {integrity: sha512-ck9r3aN2vIVMmI9A1jZGtT+w6anAzQ85DflNjgcNo2rKMfKpUVcTLcYcMNJj3Qq7ibfLQGeV4rVmZtqnbmeJqg==}
+    engines: {node: '>=24.0.0'}
     peerDependencies:
-      files-sdk: ^1.2.0
-      nitro: ^3.0.0-0
-      vite: ^8.0.0
+      '@aws-sdk/client-s3': ^3.700.0
+      '@aws-sdk/lib-storage': ^3.700.0
+      '@aws-sdk/s3-presigned-post': ^3.700.0
+      '@aws-sdk/s3-request-presigner': ^3.700.0
+      '@azure/identity': ^4.5.0
+      '@azure/storage-blob': ^12.26.0
+      '@google-cloud/storage': ^7.19.0
+      '@googleapis/drive': ^20.0.0
+      '@microsoft/microsoft-graph-client': ^3.0.7
+      '@supabase/storage-js': ^2.105.4
+      box-typescript-sdk-gen: ^1.19.1
+      dropbox: ^10.34.0
+      google-auth-library: ^10.0.0
+      uploadthing: ^7.7.4
+      vite: '>=8.0.0'
     peerDependenciesMeta:
-      files-sdk:
+      '@aws-sdk/client-s3':
         optional: true
-      nitro:
+      '@aws-sdk/lib-storage':
+        optional: true
+      '@aws-sdk/s3-presigned-post':
+        optional: true
+      '@aws-sdk/s3-request-presigner':
+        optional: true
+      '@azure/identity':
+        optional: true
+      '@azure/storage-blob':
+        optional: true
+      '@google-cloud/storage':
+        optional: true
+      '@googleapis/drive':
+        optional: true
+      '@microsoft/microsoft-graph-client':
+        optional: true
+      '@supabase/storage-js':
+        optional: true
+      box-typescript-sdk-gen:
+        optional: true
+      dropbox:
+        optional: true
+      google-auth-library:
+        optional: true
+      uploadthing:
         optional: true
       vite:
         optional: true
+
+  '@vite-hub/runtime@0.0.4':
+    resolution: {integrity: sha512-qHmrTjTqAV6I6HzhNXE9+qkY+gsN0zaWgxqGwcA2Z3KRGux0DsVbyauaBhS0IjGTpwRZUy/WdiwXjBl0m7ZpKg==}
+    engines: {node: '>=24.0.0'}
+    hasBin: true
 
   ajv@8.20.0:
     resolution: {integrity: sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==}
@@ -1088,6 +1130,9 @@ packages:
   argue-cli@3.1.0:
     resolution: {integrity: sha512-DhBpBfXL4SS2uC0N922MMajKR3CdrTG0u2or1PNYgXMsrSzViJrbtvT0nCLlLGUI0plam/ZZCs7aAauHtW9thw==}
     engines: {node: '>=22'}
+
+  aws4fetch@1.0.20:
+    resolution: {integrity: sha512-/djoAN709iY65ETD6LKCtyyEI04XIBP5xVvfmNxsEP0uJB5tyaGBztSryRr4HqMStr9R06PisQE7m9zDTXKu6g==}
 
   blake3-wasm@2.1.5:
     resolution: {integrity: sha512-F1+K8EbfOZE49dtoPtmxUQrpXaBIl3ICvasLh+nJta0xkz+9kF/7uet9fLnwKqhDrmj6g+6K3Tw9yQPUg2ka5g==}
@@ -1306,8 +1351,8 @@ packages:
     resolution: {integrity: sha512-1pgFdhK3J2LeM+dVf2Pd424yHx2ou338lC0ErNP2hPx4j8eW1Sp0XqSjNxtk6Tc4Kr5wlWtSvz8cn2yb7/SG/w==}
     engines: {node: '>=20'}
 
-  h3@2.0.1-rc.20:
-    resolution: {integrity: sha512-28ljodXuUp0fZovdiSRq4G9OgrxCztrJe5VdYzXAB7ueRvI7pIUqLU14Xi3XqdYJ/khXjfpUOOD2EQa6CmBgsg==}
+  h3@2.0.1-rc.22:
+    resolution: {integrity: sha512-Esv0DMIuPkCTSWCA0vO73vcTqwzH1wjSrAO1TXNu/K3up1sZHa9EKMapbmxCDYBeymC3fVTk4qxp7ogQWQ+KgA==}
     engines: {node: '>=20.11.1'}
     hasBin: true
     peerDependencies:
@@ -1316,12 +1361,12 @@ packages:
       crossws:
         optional: true
 
-  h3@2.0.1-rc.22:
-    resolution: {integrity: sha512-Esv0DMIuPkCTSWCA0vO73vcTqwzH1wjSrAO1TXNu/K3up1sZHa9EKMapbmxCDYBeymC3fVTk4qxp7ogQWQ+KgA==}
+  h3@2.0.1-rc.25:
+    resolution: {integrity: sha512-uIK++Up28xDt4n0+bSWfVssRivNXpUmMmA6CCiK6j9+utLcBMcFK97Gn9PlSZwAPW9oLy3CjGJ4ag40CY9YYtQ==}
     engines: {node: '>=20.11.1'}
     hasBin: true
     peerDependencies:
-      crossws: ^0.4.1
+      crossws: ^0.4.9
     peerDependenciesMeta:
       crossws:
         optional: true
@@ -1597,6 +1642,9 @@ packages:
   rou3@0.8.1:
     resolution: {integrity: sha512-ePa+XGk00/3HuCqrEnK3LxJW7I0SdNg6EFzKUJG73hMAdDcOUC/i/aSz7LSDwLrGr33kal/rqOGydzwl6U7zBA==}
 
+  rou3@0.9.2:
+    resolution: {integrity: sha512-3SOzvaAg8rkHrXtRjpCvCvbyO5to9oOO27Z/XqHEYXfMRVSw/qMIVdmaOk9W2lcRLtR6dlqTjo9hDeJk70QBYQ==}
+
   semver@7.7.4:
     resolution: {integrity: sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA==}
     engines: {node: '>=10'}
@@ -1612,6 +1660,11 @@ packages:
 
   srvx@0.11.15:
     resolution: {integrity: sha512-iXsux0UcOjdvs0LCMa2Ws3WwcDUozA3JN3BquNXkaFPP7TpRqgunKdEgoZ/uwb1J6xaYHfxtz9Twlh6yzwM6Tg==}
+    engines: {node: '>=20.16.0'}
+    hasBin: true
+
+  srvx@0.11.22:
+    resolution: {integrity: sha512-LqZxxBDMKuMAZzFzJnDCkFOrs9MZQZr0LvHiO/SuSZVdQaXD7xQ5UWTUxheJrQPve1qk9MG2B/yttUvJxw8egQ==}
     engines: {node: '>=20.16.0'}
     hasBin: true
 
@@ -2465,18 +2518,20 @@ snapshots:
     dependencies:
       undici-types: 7.19.2
 
-  '@vite-hub/blob@0.0.1(crossws@0.4.5)(nitro@3.0.260415-beta)(vite@8.0.14)':
+  '@vite-hub/blob@0.0.4(crossws@0.4.5)(vite@8.0.14)':
     dependencies:
+      '@vite-hub/runtime': 0.0.4
+      aws4fetch: 1.0.20
       defu: 6.1.7
       esbuild: 0.27.7
-      exsolve: 1.0.8
-      h3: 2.0.1-rc.20(crossws@0.4.5)
+      h3: 2.0.1-rc.25(crossws@0.4.5)
       pathe: 2.0.3
     optionalDependencies:
-      nitro: 3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260521.0)(vite@8.0.14)
       vite: 8.0.14(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.7.0)
     transitivePeerDependencies:
       - crossws
+
+  '@vite-hub/runtime@0.0.4': {}
 
   ajv@8.20.0:
     dependencies:
@@ -2492,6 +2547,8 @@ snapshots:
   argparse@2.0.1: {}
 
   argue-cli@3.1.0: {}
+
+  aws4fetch@1.0.20: {}
 
   blake3-wasm@2.1.5: {}
 
@@ -2629,7 +2686,7 @@ snapshots:
 
   evlog@2.17.0(nitro@3.0.260415-beta)(ofetch@2.0.0-alpha.3)(vite@8.0.14):
     optionalDependencies:
-      nitro: 3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260521.0)(vite@8.0.14)
+      nitro: 3.0.260415-beta(aws4fetch@1.0.20)(jiti@2.7.0)(miniflare@4.20260521.0)(vite@8.0.14)
       ofetch: 2.0.0-alpha.3
       vite: 8.0.14(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.7.0)
 
@@ -2654,17 +2711,17 @@ snapshots:
     dependencies:
       ini: 6.0.0
 
-  h3@2.0.1-rc.20(crossws@0.4.5):
+  h3@2.0.1-rc.22(crossws@0.4.5):
     dependencies:
       rou3: 0.8.1
       srvx: 0.11.15
     optionalDependencies:
       crossws: 0.4.5(srvx@0.11.15)
 
-  h3@2.0.1-rc.22(crossws@0.4.5):
+  h3@2.0.1-rc.25(crossws@0.4.5):
     dependencies:
-      rou3: 0.8.1
-      srvx: 0.11.15
+      rou3: 0.9.2
+      srvx: 0.11.22
     optionalDependencies:
       crossws: 0.4.5(srvx@0.11.15)
 
@@ -2770,7 +2827,7 @@ snapshots:
 
   nf3@0.3.17: {}
 
-  nitro@3.0.260415-beta(jiti@2.7.0)(miniflare@4.20260521.0)(vite@8.0.14):
+  nitro@3.0.260415-beta(aws4fetch@1.0.20)(jiti@2.7.0)(miniflare@4.20260521.0)(vite@8.0.14):
     dependencies:
       consola: 3.4.2
       crossws: 0.4.5(srvx@0.11.15)
@@ -2785,7 +2842,7 @@ snapshots:
       rolldown: 1.0.2
       srvx: 0.11.15
       unenv: 2.0.0-rc.24
-      unstorage: 2.0.0-alpha.7(db0@0.3.4)(ofetch@2.0.0-alpha.3)
+      unstorage: 2.0.0-alpha.7(aws4fetch@1.0.20)(db0@0.3.4)(ofetch@2.0.0-alpha.3)
     optionalDependencies:
       jiti: 2.7.0
       vite: 8.0.14(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.7.0)
@@ -2943,6 +3000,8 @@ snapshots:
 
   rou3@0.8.1: {}
 
+  rou3@0.9.2: {}
+
   semver@7.7.4: {}
 
   sharp@0.34.5:
@@ -2979,6 +3038,8 @@ snapshots:
   source-map-js@1.2.1: {}
 
   srvx@0.11.15: {}
+
+  srvx@0.11.22: {}
 
   string-width@7.2.0:
     dependencies:
@@ -3019,8 +3080,9 @@ snapshots:
     dependencies:
       pathe: 2.0.3
 
-  unstorage@2.0.0-alpha.7(db0@0.3.4)(ofetch@2.0.0-alpha.3):
+  unstorage@2.0.0-alpha.7(aws4fetch@1.0.20)(db0@0.3.4)(ofetch@2.0.0-alpha.3):
     optionalDependencies:
+      aws4fetch: 1.0.20
       db0: 0.3.4
       ofetch: 2.0.0-alpha.3
 

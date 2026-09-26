@@ -1,8 +1,4 @@
-import type { BlobStorage } from '@vite-hub/blob';
-import { createDriver } from '@vite-hub/blob/drivers/cloudflare';
-import { getNamedBlobRuntimeStorage, setNamedBlobRuntimeStorage } from '@vite-hub/blob/runtime/state';
-import { createBlobStorage } from '@vite-hub/blob/storage';
-import { useRuntimeConfig } from 'nitro/runtime-config';
+import { blob } from '@vite-hub/blob';
 
 import {
 	ALLOWED_FIT_MODES,
@@ -104,24 +100,6 @@ export function parseTransformations(pathname: string, searchParams: URLSearchPa
 	return options;
 }
 
-function resolveBlobStorage(): BlobStorage {
-	const existing = getNamedBlobRuntimeStorage('default');
-	if (existing) return existing;
-
-	const { blob } = useRuntimeConfig();
-	if (!blob) {
-		throw new Error('Blob runtime is disabled.');
-	}
-
-	if (blob.store.driver !== 'cloudflare-r2') {
-		throw new Error(`Unsupported blob driver: ${blob.store.driver}`);
-	}
-
-	const storage = createBlobStorage(createDriver(blob.store));
-	setNamedBlobRuntimeStorage('default', storage);
-	return storage;
-}
-
 export function parseRangeHeader(rangeHeader: string):
 	| {
 			offset: number;
@@ -157,17 +135,14 @@ export async function fetchObject(
 ): Promise<Response> {
 	const objectKey = normalizeObjectKey(pathname);
 	const hasTransformations = cfOptions !== null && Object.keys(cfOptions).length > 0;
-	const storage = resolveBlobStorage();
 
 	if (isHeadRequest) {
-		let meta;
-		try {
-			meta = await storage.head(objectKey);
-		} catch (err) {
-			if ((err as { statusCode?: number }).statusCode === 404) {
+		const [headError, meta] = await blob.head(objectKey);
+		if (headError) {
+			if (headError.code === 'BLOB_NOT_FOUND') {
 				return createErrorResponse('NOT_FOUND', 'Object not found', 404);
 			}
-			throw err;
+			throw headError;
 		}
 
 		const headers = new Headers();
@@ -197,7 +172,8 @@ export async function fetchObject(
 		return new Response(transformedResponse.body, { headers });
 	}
 
-	const object = await storage.get(objectKey);
+	const [getError, object] = await blob.get(objectKey);
+	if (getError) throw getError;
 	if (!object) {
 		return createErrorResponse('NOT_FOUND', 'The requested resource could not be found', 404);
 	}

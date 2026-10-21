@@ -1,9 +1,10 @@
 import { defineHandler } from 'nitro';
 import { handleCors } from 'nitro/h3';
 
+import { getCloudflareEnv } from '../utils/cloudflare';
+
 export default defineHandler((event) => {
-	// oxlint-disable-next-line typescript/no-non-null-assertion -- We are confident that these properties will be available in the Cloudflare Workers environment
-	const { env } = event.req.runtime!.cloudflare!;
+	const env = getCloudflareEnv(event);
 	const allowedOrigins = env.ALLOWED_ORIGINS ? (env.ALLOWED_ORIGINS as string).split(',').map((o: string) => o.trim()) : [];
 
 	// h3 v2: handleCors returns a Response (noContent) for preflight, or `false` for all other

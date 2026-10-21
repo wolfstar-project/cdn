@@ -168,6 +168,7 @@ Cloudflare runtime binding and use structured logging throughout:
 ```typescript
 import { useLogger } from 'evlog/nitro/v3';
 import { defineHandler } from 'nitro';
+
 import { createErrorResponse } from '../utils/errors';
 
 export default defineHandler(async (event) => {

@@ -98,6 +98,7 @@ export default defineHandler(async (event) => {
 ```ts
 import { useLogger } from 'evlog/nitro/v3';
 import { defineHandler } from 'nitro';
+
 import { createErrorResponse } from '../utils/errors';
 
 export default defineHandler(async (event) => {

@@ -43,7 +43,7 @@ for serving and transforming images from Cloudflare R2 storage.
   - [Commit messages and PR titles](#commit-messages-and-pr-titles)
   - [PR descriptions](#pr-descriptions)
 - [Pre-commit hooks](#pre-commit-hooks)
-- [Using AI](#using-ai)
+- [AI-assisted contributions](#ai-assisted-contributions)
 - [Questions?](#questions)
 - [License](#license)
 
@@ -302,27 +302,11 @@ Git hooks are managed via Husky. Staged files are linted and formatted
 automatically by `nano-staged` on every commit. Commit messages are validated
 against the Conventional Commits format by `commitlint`.
 
-## Using AI
+## AI-assisted contributions
 
-You're welcome to use AI tools to help you contribute. But there are two
-important ground rules:
+AI tools are welcome. You may use them to write code, tests, documentation, issues, and pull request descriptions, as long as you understand and stand behind everything you submit. Maintainers may close or rework a pull request whose author does not understand its changes.
 
-### 1. Never let an LLM speak for you
-
-When you write a comment, issue, or PR description, use your own words. Grammar
-and spelling don't matter -- real connection does. AI-generated summaries tend
-to be long-winded, dense, and often inaccurate. The goal is not to sound
-impressive, but to communicate clearly.
-
-### 2. Never let an LLM think for you
-
-Feel free to use AI to write code, tests, or point you in the right direction.
-But always understand what it has written before contributing it. Take personal
-responsibility for your contributions. Don't say "ChatGPT says..." -- tell us
-what you think.
-
-For more context, see
-[Using AI in open source](https://roe.dev/blog/using-ai-in-open-source).
+Disclosing AI usage is not required, but appreciated: [Disclosure](../AI_POLICY.md#disclosure) gives the line to end the pull request body with. The full rules are in [`AI_POLICY.md`](../AI_POLICY.md).
 
 ## Questions?
 

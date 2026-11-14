@@ -7,6 +7,12 @@
 	"name": "worker-r2-cdn",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-09-13",
+	/**
+	 * evlog 2.35+ bundles a `node:fs` import. Before 2025-09-15 the runtime
+	 * only exposes `node:fs` through this flag; without it the upload fails with
+	 * `No such module "node:fs"` (code 10021).
+	 */
+	"compatibility_flags": ["enable_nodejs_fs_module"],
 	"observability": {
 		"enabled": true,
 	},
